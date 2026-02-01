@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flavourman Battle : MVP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class = "game-conatiner">
+        <div class = "ui-layer">
+            <div class = "player-stats">
+                <div class = "health-bar-border">
+                    <div id = "player1health" class = "health-bar" style="background-color: red;"></div>
+                </div>
+            </div>
+        <div id="timer" class = "timer">60</div>
+            <div class = "player-stats">
+                <div class = "health-bar-border">
+                    <div id = "player2health" class = "health-bar" style="background-color: white;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="displayText" class="message-display"></div>
+        <canvas id="gameCanvas"></canvas>
+     </div>
+<script src="index.js"></script>
+</body>
+</html>
