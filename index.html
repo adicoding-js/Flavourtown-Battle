@@ -1,34 +1,524 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Flavourman Battle - A high-energy 1v1 fighting game with culinary-themed martial arts">
     <title>Flavourman Battle</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    <div class="game-container">
-        <div class="ui-layer">
-            <div class="player-stats">
-                <div class="health-bar-border">
-                    <div id="player1Health" class="health-bar" style="background-color: red;"></div>
-                </div>
-            </div>
 
-            <div id="timer" class="timer">60</div>
+    <!-- Background Layer -->
+    <div class="bg-layer"></div>
 
-            <div class="player-stats">
-                <div class="health-bar-border">
-                    <div id="player2Health" class="health-bar" style="background-color: white;"></div>
+    <div class="app-container">
+
+        <!-- SCREENS -->
+        <div id="screens">
+
+            <!-- Login Screen -->
+            <section id="login-screen" class="screen active">
+                <div class="glass-panel login-panel">
+                    <div class="logo-container">
+                        <h1 class="glitch-text" data-text="FLAVOURMAN">FLAVOURMAN</h1>
+                        <h2 class="subtitle">BATTLE</h2>
+                        <div class="logo-underline"></div>
+                    </div>
+                    <div class="input-group">
+                        <label>CHEF ID</label>
+                        <input type="text" id="username" placeholder="ENTER CHEF NAME">
+                    </div>
+                    <div class="input-group">
+                        <label>PASSCODE</label>
+                        <input type="password" id="password" placeholder="••••••">
+                    </div>
+                    <button class="btn-primary" onclick="showScreen('main-menu')">LOGIN >></button>
+                    <p class="skip-text" onclick="showScreen('main-menu')">Skip for now →</p>
                 </div>
-            </div>
+            </section>
+
+            <!-- Main Menu -->
+            <section id="main-menu" class="screen">
+                <div class="glass-panel menu-panel">
+                    <h1 class="logo-text">FLAVOUR<span class="highlight">TOWN</span></h1>
+                    <div class="menu-tagline">Choose your flavor. Master the battle.</div>
+                    <div class="menu-buttons">
+                        <button class="btn-large" onclick="showScreen('mode-select')">
+                            <span class="btn-icon">⚔️</span> QUICK BATTLE
+                        </button>
+                        <button class="btn-large" onclick="showScreen('leaderboard')">
+                            <span class="btn-icon">🏆</span> LEADERBOARD
+                        </button>
+                        <button class="btn-large" onclick="showScreen('settings')">
+                            <span class="btn-icon">⚙️</span> SETTINGS
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mode Select -->
+            <section id="mode-select" class="screen">
+                <div class="glass-panel mode-panel">
+                    <h2 class="screen-title">SELECT MODE</h2>
+                    <div class="mode-grid">
+                        <div class="mode-card" onclick="startCharSelect('local')">
+                            <div class="mode-icon">🎮</div>
+                            <h3>LOCAL BATTLE</h3>
+                            <p>2 Players, 1 Keyboard</p>
+                        </div>
+                        <div class="mode-card" onclick="startCharSelect('ai')">
+                            <div class="mode-icon">🤖</div>
+                            <h3>VS AI</h3>
+                            <p>Challenge the Computer</p>
+                        </div>
+                    </div>
+                    <button class="btn-back" onclick="showScreen('main-menu')">← BACK</button>
+                </div>
+            </section>
+
+            <!-- Character Select -->
+            <section id="char-select" class="screen">
+                <h2 class="screen-title">CHOOSE YOUR FLAVOUR</h2>
+                <div class="player-select-info">
+                    <div class="selecting-player" id="selecting-indicator">PLAYER 1 SELECTING</div>
+                </div>
+
+                <div class="selection-container">
+                    <!-- Player 1 Selection Display -->
+                    <div class="player-preview p1-preview">
+                        <div class="preview-label">PLAYER 1</div>
+                        <div class="preview-character" id="p1-preview">
+                            <div class="preview-icon" id="p1-icon" style="background: #FF4D4D;"></div>
+                            <div class="preview-name" id="p1-name">SPICY</div>
+                        </div>
+                        <div class="preview-controls">
+                            <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Move
+                            <kbd>SPACE</kbd> Attack
+                            <kbd>F</kbd> Special
+                        </div>
+                    </div>
+
+                    <!-- Character Grid -->
+                    <div class="char-grid">
+                        <!-- SPICY -->
+                        <div class="char-card spicy" data-char="Spicy" onclick="selectCharacter('Spicy')">
+                            <div class="char-icon" style="background: #FF4D4D;"></div>
+                            <h3>SPICY</h3>
+                            <p class="role">Glass Cannon</p>
+                            <p class="ability">🔥 Fireball</p>
+                            <div class="stats">
+                                <div class="stat-row"><span>PWR</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 90%; background: #FF4D4D;"></div>
+                                    </div>
+                                </div>
+                                <div class="stat-row"><span>HP</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 40%; background: #FF4D4D;"></div>
+                                    </div>
+                                </div>
+                                <div class="stat-row"><span>SPD</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 70%; background: #FF4D4D;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- SALTY -->
+                        <div class="char-card salty" data-char="Salty" onclick="selectCharacter('Salty')">
+                            <div class="char-icon" style="background: #FFFFFF;"></div>
+                            <h3>SALTY</h3>
+                            <p class="role">Tank</p>
+                            <p class="ability">🛡️ Salt Shield</p>
+                            <div class="stats">
+                                <div class="stat-row"><span>PWR</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 50%; background: #FFFFFF;"></div>
+                                    </div>
+                                </div>
+                                <div class="stat-row"><span>HP</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 100%; background: #FFFFFF;"></div>
+                                    </div>
+                                </div>
+                                <div class="stat-row"><span>SPD</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 40%; background: #FFFFFF;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- SOUR -->
+                        <div class="char-card sour" data-char="Sour" onclick="selectCharacter('Sour')">
+                            <div class="char-icon" style="background: #CCFF00;"></div>
+                            <h3>SOUR</h3>
+                            <p class="role">Disruptor</p>
+                            <p class="ability">💧 Acid Pool</p>
+                            <div class="stats">
+                                <div class="stat-row"><span>PWR</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 60%; background: #CCFF00;"></div>
+                                    </div>
+                                </div>
+                                <div class="stat-row"><span>HP</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 65%; background: #CCFF00;"></div>
+                                    </div>
+                                </div>
+                                <div class="stat-row"><span>SPD</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 60%; background: #CCFF00;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- SWEET -->
+                        <div class="char-card sweet" data-char="Sweet" onclick="selectCharacter('Sweet')">
+                            <div class="char-icon" style="background: #FF69B4;"></div>
+                            <h3>SWEET</h3>
+                            <p class="role">Speedster</p>
+                            <p class="ability">💨 Sugar Rush</p>
+                            <div class="stats">
+                                <div class="stat-row"><span>PWR</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 45%; background: #FF69B4;"></div>
+                                    </div>
+                                </div>
+                                <div class="stat-row"><span>HP</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 55%; background: #FF69B4;"></div>
+                                    </div>
+                                </div>
+                                <div class="stat-row"><span>SPD</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 100%; background: #FF69B4;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- UMAMI -->
+                        <div class="char-card umami" data-char="Umami" onclick="selectCharacter('Umami')">
+                            <div class="char-icon" style="background: #9D00FF;"></div>
+                            <h3>UMAMI</h3>
+                            <p class="role">Brawler</p>
+                            <p class="ability">🔨 Meat Hammer</p>
+                            <div class="stats">
+                                <div class="stat-row"><span>PWR</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 80%; background: #9D00FF;"></div>
+                                    </div>
+                                </div>
+                                <div class="stat-row"><span>HP</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 75%; background: #9D00FF;"></div>
+                                    </div>
+                                </div>
+                                <div class="stat-row"><span>SPD</span>
+                                    <div class="stat-bar-bg">
+                                        <div class="bar" style="width: 40%; background: #9D00FF;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player 2 Selection Display -->
+                    <div class="player-preview p2-preview">
+                        <div class="preview-label">PLAYER 2</div>
+                        <div class="preview-character" id="p2-preview">
+                            <div class="preview-icon" id="p2-icon" style="background: #FFFFFF;"></div>
+                            <div class="preview-name" id="p2-name">SALTY</div>
+                        </div>
+                        <div class="preview-controls">
+                            <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> Move
+                            <kbd>.</kbd> Attack
+                            <kbd>/</kbd> Special
+                        </div>
+                    </div>
+                </div>
+
+                <div class="char-select-buttons">
+                    <button class="btn-back" onclick="showScreen('mode-select')">← BACK</button>
+                    <button class="btn-primary btn-fight" onclick="startFight()">FIGHT! ⚔️</button>
+                </div>
+            </section>
+
+            <!-- Leaderboard -->
+            <section id="leaderboard" class="screen">
+                <div class="glass-panel leaderboard-panel">
+                    <h2>🏆 TOP CHEFS</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>RANK</th>
+                                <th>CHEF</th>
+                                <th>WINS</th>
+                                <th>DMG</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="rank-gold">
+                                <td>🥇</td>
+                                <td>GuyFieri_Fan</td>
+                                <td>999</td>
+                                <td>500k</td>
+                            </tr>
+                            <tr class="rank-silver">
+                                <td>🥈</td>
+                                <td>SpicyBoi</td>
+                                <td>850</td>
+                                <td>420k</td>
+                            </tr>
+                            <tr class="rank-bronze">
+                                <td>🥉</td>
+                                <td>SaltBae</td>
+                                <td>700</td>
+                                <td>300k</td>
+                            </tr>
+                            <tr>
+                                <td>#4</td>
+                                <td>UmamiMommy</td>
+                                <td>650</td>
+                                <td>280k</td>
+                            </tr>
+                            <tr>
+                                <td>#5</td>
+                                <td>SugarRush</td>
+                                <td>500</td>
+                                <td>200k</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn-back" onclick="showScreen('main-menu')">← BACK</button>
+                </div>
+            </section>
+
+            <!-- Settings -->
+            <section id="settings" class="screen">
+                <div class="glass-panel settings-panel">
+                    <h2>⚙️ SETTINGS</h2>
+                    <div class="setting-group">
+                        <label>MUSIC VOLUME</label>
+                        <input type="range" min="0" max="100" value="30" id="musicVolume">
+                    </div>
+                    <div class="setting-group">
+                        <label>SFX VOLUME</label>
+                        <input type="range" min="0" max="100" value="50" id="sfxVolume">
+                    </div>
+                    <div class="setting-group">
+                        <label>ARENA</label>
+                        <select id="arenaSelect">
+                            <option value="cutting_board">The Cutting Board</option>
+                            <option value="frying_pan">The Frying Pan</option>
+                        </select>
+                    </div>
+                    <button class="btn-back" onclick="showScreen('main-menu')">← BACK</button>
+                </div>
+            </section>
+
+            <!-- Game Over -->
+            <section id="game-over" class="screen">
+                <div class="overlay-content game-over-content">
+                    <div class="winner-crown">👑</div>
+                    <h1 id="winner-text">SPICY WINS!</h1>
+                    <div class="game-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">ROUND TIME</span>
+                            <span class="stat-value" id="round-time">45s</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">TOTAL DMG</span>
+                            <span class="stat-value" id="total-damage">150</span>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn-primary" onclick="resetGame()">⚔️ REMATCH</button>
+                        <button class="btn-secondary" onclick="backToMenu()">🏠 MENU</button>
+                    </div>
+                </div>
+            </section>
         </div>
 
-        <div id="displayText" class="message-display"></div>
+        <!-- GAME HUD (Hidden by default until game starts) -->
+        <div id="game-ui" class="game-ui hidden">
+            <!-- Top HUD -->
+            <div class="hud-top">
+                <!-- Player 1 -->
+                <div class="player-hud p1">
+                    <div class="portrait" id="p1Portrait" style="background: #FF4D4D;"></div>
+                    <div class="bars">
+                        <div class="name" id="p1HudName">PLAYER 1</div>
+                        <div class="health-container">
+                            <div class="health-bar-fill" id="player1Health" style="width: 100%;"></div>
+                            <div class="damage-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timer -->
+                <div class="timer-container">
+                    <div id="timer" class="timer-display">60</div>
+                    <div class="timer-label">SEC</div>
+                </div>
+
+                <!-- Player 2 -->
+                <div class="player-hud p2">
+                    <div class="bars">
+                        <div class="name" id="p2HudName">PLAYER 2</div>
+                        <div class="health-container">
+                            <div class="health-bar-fill" id="player2Health" style="width: 100%;"></div>
+                            <div class="damage-bar-fill"></div>
+                        </div>
+                    </div>
+                    <div class="portrait" id="p2Portrait" style="background: #FFFFFF;"></div>
+                </div>
+            </div>
+
+            <!-- Floating Combat Text -->
+            <div id="displayText" class="message-display"></div>
+        </div>
 
         <canvas id="gameCanvas"></canvas>
     </div>
 
-    <script src="index.js"></script>
+    <!-- Main Game Script (bundled, no modules for file:// compatibility) -->
+    <script src="game.js"></script>
+
+    <!-- UI Scripts (non-module for inline onclick handlers) -->
+    <script>
+        // Character selection state
+        let p1Selection = 'Spicy';
+        let p2Selection = 'Salty';
+        let selectingPlayer = 1;
+        let gameMode = 'local';
+
+        const charColors = {
+            'Spicy': '#FF4D4D',
+            'Salty': '#FFFFFF',
+            'Sour': '#CCFF00',
+            'Sweet': '#FF69B4',
+            'Umami': '#9D00FF'
+        };
+
+        // Screen navigation
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(screenId);
+            if (target) target.classList.add('active');
+        }
+
+        // Start character select
+        function startCharSelect(mode) {
+            gameMode = mode;
+            selectingPlayer = 1;
+            updateSelectingIndicator();
+            showScreen('char-select');
+        }
+
+        // Update which player is selecting
+        function updateSelectingIndicator() {
+            const indicator = document.getElementById('selecting-indicator');
+            if (indicator) {
+                indicator.textContent = `PLAYER ${selectingPlayer} SELECTING`;
+                indicator.style.color = selectingPlayer === 1 ? '#FF4D4D' : '#00FFFF';
+            }
+        }
+
+        // Character selection
+        function selectCharacter(flavor) {
+            // Remove selected class from all cards
+            document.querySelectorAll('.char-card').forEach(card => {
+                card.classList.remove('selected-p1', 'selected-p2');
+            });
+
+            if (selectingPlayer === 1) {
+                p1Selection = flavor;
+                document.getElementById('p1-icon').style.background = charColors[flavor];
+                document.getElementById('p1-name').textContent = flavor.toUpperCase();
+
+                // Mark selected card
+                document.querySelector(`.char-card[data-char="${flavor}"]`).classList.add('selected-p1');
+
+                // Move to P2 selection
+                selectingPlayer = 2;
+                updateSelectingIndicator();
+            } else {
+                p2Selection = flavor;
+                document.getElementById('p2-icon').style.background = charColors[flavor];
+                document.getElementById('p2-name').textContent = flavor.toUpperCase();
+
+                // Mark selected card
+                document.querySelector(`.char-card[data-char="${flavor}"]`).classList.add('selected-p2');
+
+                // Reset to P1 for potential re-selection
+                selectingPlayer = 1;
+                updateSelectingIndicator();
+            }
+
+            // Also mark previous selections
+            document.querySelector(`.char-card[data-char="${p1Selection}"]`)?.classList.add('selected-p1');
+            document.querySelector(`.char-card[data-char="${p2Selection}"]`)?.classList.add('selected-p2');
+        }
+
+        // Start the fight
+        function startFight() {
+            // Update portraits in HUD
+            document.getElementById('p1Portrait').style.background = charColors[p1Selection];
+            document.getElementById('p2Portrait').style.background = charColors[p2Selection];
+            document.getElementById('p1HudName').textContent = p1Selection.toUpperCase();
+            document.getElementById('p2HudName').textContent = p2Selection.toUpperCase();
+
+            // Pass selections to game (via window globals)
+            window.p1Selection = p1Selection;
+            window.p2Selection = p2Selection;
+
+            // Hide screens, show game
+            document.getElementById('screens').style.display = 'none';
+            document.getElementById('game-ui').classList.remove('hidden');
+
+            // Initialize game
+            if (window.initGame) {
+                window.initGame();
+            }
+        }
+
+        // Back to menu
+        function backToMenu() {
+            document.getElementById('screens').style.display = 'block';
+            document.getElementById('game-ui').classList.add('hidden');
+            showScreen('main-menu');
+        }
+
+        // Reset game
+        function resetGame() {
+            if (window.resetGame) {
+                document.getElementById('screens').style.display = 'none';
+                document.getElementById('game-ui').classList.remove('hidden');
+                showScreen('');
+                window.resetGame();
+            } else {
+                location.reload();
+            }
+        }
+
+        // Initialize character previews
+        document.addEventListener('DOMContentLoaded', () => {
+            selectCharacter('Spicy');
+            selectingPlayer = 2;
+            selectCharacter('Salty');
+            selectingPlayer = 1;
+            updateSelectingIndicator();
+        });
+    </script>
 </body>
+
 </html>

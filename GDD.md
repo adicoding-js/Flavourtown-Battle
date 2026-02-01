@@ -70,6 +70,7 @@ Each character uses the same base Stickman model but differs in **Color**, **Par
 * **Leaderboard** A leaderboard with highest amount of wins, highest amount of kills, highest amount of damage.
 * **Simple Username + passsword login system** A simple login system with only password + username to log in user data, info, stats etc. 
 * **Simple Local + Multiplayer + Ai:** The users should be able to play LAN/Local multiplayer, Online Multiplayer, with Ai (Different Levels + randomized Ai Classes )  .
+* **Ragdoll Physics**: The game should be physics based, with ragdoll physics for the characters. After Hit, the characters should fall and knockback like ragdolls.
 
 ---
 
@@ -114,5 +115,7 @@ Each character uses the same base Stickman model but differs in **Color**, **Par
 * **SFX Jump:** Retro "Whoosh".
 
 ### Graphics
-* **Clean Modern Ui, with a Retro, Y2K feel**
+* **Clean Retro-Futureism Ui, with a Retro, Y2K feel**
 * **Customizable:** Players can customize thier controls
+
+
