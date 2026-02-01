@@ -17,9 +17,9 @@ body {
 .game-container {
     position: relative;
     display: inline-block;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
-    /*UI overlay that is on top of the canvas*/
+
 .ui-layer {
     position: absolute;
     display: flex;
@@ -34,21 +34,29 @@ body {
     width: 100%;
     justify-content: flex-end;
 }
-  /*player 1 is on the left so we flip the flex's direction*/
+
 .player-stats:first-child {
     justify-content: flex-start;
 }
+
 .health-bar-border {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    background-color: #333;
+    border: 3px solid #000;
+}
+
+.health-bar {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    width: 100%; /*js will change this data of width*/
+    width: 100%;
     transition: width 0.1s ease;
 }
 
-/*this styles the timer*/
 .timer {
     width: 100px;
     height: 50px;
@@ -60,22 +68,21 @@ body {
     justify-content: center;
     font-size: 24px;
     font-weight: bold;
-    margin : 0 20px;
+    margin: 0 20px;
 }
 
-/*Game End Text*/
 .message-display {
     position: absolute;
-    color: #fff;
+    color: white;
     font-size: 4rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 0%;
-    right: 0%;
-    bottom: 0%;
-    left: 0%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: 20;
-    pointer-events: none; /*Clicks pass through here*/
-    text-shadow: 2px 2px #000;
+    pointer-events: none;
+    display: none; /* Hidden by default */
 }
