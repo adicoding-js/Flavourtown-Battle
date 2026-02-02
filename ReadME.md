@@ -27,7 +27,7 @@ The goal is simple:
    - Depleting enemy HP  
    - Knocking them out of the arena  
    - Or having more HP when time runs out  
-
+4. **The Fighter will only hit the side which you are facing!!**
 ---
 
 ## 🕹️ Controls (Local Multiplayer)
@@ -86,7 +86,7 @@ Each fighter shares the same base stickman model but differs in:
 
 ## 🚀 Extra Features
 
-#### - Leaderboard (wins, kills, damage) **DOESN'T WORK WITH GUEST**
+## - Leaderboard (wins, kills, damage) *DOESN'T WORK WITH GUEST*
 - Login system (username + password)  
 - Local, Online & AI modes  
 - Ragdoll physics  
