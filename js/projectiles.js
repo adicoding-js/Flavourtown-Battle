@@ -250,5 +250,4 @@ class ProjectileSystem {
 }
 
 const projectileSystem = new ProjectileSystem();
-export { Projectile, HazardZone, projectileSystem };
-export default projectileSystem;
+export { Projectile, HazardZone, projectileSystem };    

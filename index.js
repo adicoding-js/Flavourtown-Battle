@@ -1,0 +1,235 @@
+const canvas = document.querySelector('#gameCanvas');
+const c = canvas.getContext('2d');
+
+canvas.width = 1024;
+canvas.height = 576;
+c.fillRect(0, 0, canvas.width, canvas.height);
+
+const gravity = 0.7;
+let timer = 60;
+let timerId;
+
+class Fighter {
+    constructor({ position, velocity, color = 'red', offset, name }) {
+        this.position = position;
+        this.velocity = velocity;
+        this.width = 50;
+        this.height = 150;
+        this.lastKey;
+        this.color = color;
+        this.name = name;
+        this.health = 100;
+        this.attackBox = {
+            position: { x: this.position.x, y: this.position.y },
+            offset: offset,
+            width: 100,
+            height: 50
+        };
+        this.isAttacking = false;
+    }
+
+    draw() {
+        c.fillStyle = this.color;
+        c.fillRect(this.position.x, this.position.y, this.width, this.height);
+
+        // This draws the attack box
+        if (this.isAttacking) {
+            c.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            c.fillRect(
+                this.attackBox.position.x,
+                this.attackBox.position.y,
+                this.attackBox.width,
+                this.attackBox.height
+            );
+        }
+    }
+
+    update() {
+        this.draw();
+        this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
+        this.attackBox.position.y = this.position.y;
+
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+
+        if (this.position.y + this.height + this.velocity.y >= canvas.height - 50) {
+            this.velocity.y = 0;
+            this.position.y = canvas.height - 50 - this.height;
+        } else {
+            this.velocity.y += gravity;
+        }
+    }
+
+    attack() {
+        this.isAttacking = true;
+        setTimeout(() => {
+            this.isAttacking = false;
+        }, 100);
+    }
+}
+
+const player1 = new Fighter({
+    position: { x: 100, y: 0 },
+    velocity: { x: 0, y: 0 },
+    color: '#FF4d4d',
+    offset: { x: 0, y: 0 },
+    name: 'Spicy'
+});
+
+const player2 = new Fighter({
+    position: { x: 800, y: 0 },
+    velocity: { x: 0, y: 0 },
+    color: 'white',
+    offset: { x: -50, y: 0 },
+    name: 'Salty'
+});
+
+const keys = {
+    w: { pressed: false },
+    a: { pressed: false },
+    d: { pressed: false },
+    ArrowUp: { pressed: false },
+    ArrowLeft: { pressed: false },
+    ArrowRight: { pressed: false }
+};
+
+function rectangularCollision({ rectangle1, rectangle2 }) {
+    return (
+        rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x &&
+        rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&
+        rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
+        rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
+    );
+}
+
+function determineWinner({ player1, player2, timerId }) {
+    clearTimeout(timerId);
+    document.querySelector('#displayText').style.display = 'flex';
+    if (player1.health === player2.health) {
+        document.querySelector('#displayText').innerHTML = 'TIE GAME';
+    } else if (player1.health > player2.health) {
+        document.querySelector('#displayText').innerHTML = 'SPICY WINS';
+    } else if (player1.health < player2.health) {
+        document.querySelector('#displayText').innerHTML = 'SALTY WINS';
+    }
+}
+
+function decreaseTimer() {
+    if (timer > 0) {
+        timerId = setTimeout(decreaseTimer, 1000);
+        timer--;
+        document.querySelector('#timer').innerHTML = timer;
+    }
+    if (timer === 0) {
+        determineWinner({ player1, player2, timerId });
+    }
+}
+
+// decreaseTimer(); // Moved to initGame
+
+function animate() {
+    window.requestAnimationFrame(animate);
+    c.fillStyle = 'black';
+    c.fillRect(0, 0, canvas.width, canvas.height);
+
+    // This draws the floor
+    c.fillStyle = '#8B4513';
+    c.fillRect(0, canvas.height - 50, canvas.width, 50);
+
+    player1.update();
+    player2.update();
+
+    // Player 1 movement
+    player1.velocity.x = 0;
+    if (keys.a.pressed && player1.lastKey === 'a') {
+        player1.velocity.x = -5;
+    } else if (keys.d.pressed && player1.lastKey === 'd') {
+        player1.velocity.x = 5;
+    }
+
+    // Player 2 movement
+    player2.velocity.x = 0;
+    if (keys.ArrowLeft.pressed && player2.lastKey === 'ArrowLeft') {
+        player2.velocity.x = -5;
+    } else if (keys.ArrowRight.pressed && player2.lastKey === 'ArrowRight') {
+        player2.velocity.x = 5;
+    }
+
+    // This detects Collision: (If Player 1 hits Player 2)
+    if (
+        rectangularCollision({ rectangle1: player1, rectangle2: player2 }) &&
+        player1.isAttacking
+    ) {
+        player1.isAttacking = false;
+        player2.health -= 10;
+        // Verify element exists before updating style
+        const p2HealthBar = document.querySelector('#player2Health');
+        if (p2HealthBar) p2HealthBar.style.width = player2.health + '%';
+    }
+
+    // This detects Collision: (If Player 2 hits Player 1)
+    if (
+        rectangularCollision({ rectangle1: player2, rectangle2: player1 }) &&
+        player2.isAttacking
+    ) {
+        player2.isAttacking = false;
+        player1.health -= 10;
+        const p1HealthBar = document.querySelector('#player1Health');
+        if (p1HealthBar) p1HealthBar.style.width = player1.health + '%';
+    }
+
+    // This ends the game based on health
+    if (player1.health <= 0 || player2.health <= 0) {
+        determineWinner({ player1, player2, timerId });
+    }
+}
+window.addEventListener('keydown', (event) => {
+    switch (event.key) {
+        case 'd':
+            keys.d.pressed = true;
+            player1.lastKey = 'd';
+            break;
+        case 'a':
+            keys.a.pressed = true;
+            player1.lastKey = 'a';
+            break;
+        case 'w':
+            if (player1.velocity.y === 0) player1.velocity.y = -20;
+            break;
+        case ' ':
+            player1.attack();
+            break;
+
+        case 'ArrowRight':
+            keys.ArrowRight.pressed = true;
+            player2.lastKey = 'ArrowRight';
+            break;
+        case 'ArrowLeft':
+            keys.ArrowLeft.pressed = true;
+            player2.lastKey = 'ArrowLeft';
+            break;
+        case 'ArrowUp':
+            if (player2.velocity.y === 0) player2.velocity.y = -20;
+            break;
+        case '.':
+            player2.attack();
+            break;
+    }
+});
+
+window.addEventListener('keyup', (event) => {
+    switch (event.key) {
+        case 'd':
+            keys.d.pressed = false;
+            break;
+        case 'a':
+            keys.a.pressed = false;
+            break;
+        case 'ArrowRight':
+            keys.ArrowRight.pressed = false;
+            break;
+        case 'ArrowLeft':
+            keys.ArrowLeft.pressed = false;
+            break;
+    }
+});
