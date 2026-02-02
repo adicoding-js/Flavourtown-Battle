@@ -37,7 +37,7 @@ The goal is simple:
 | Move | W A S D | Arrow Keys |
 | Jump | W | Up Arrow |
 | Crouch | S | Down Arrow |
-| Basic Attack | Left Click | `.` (Period) |
+| Basic Attack | Spacebar | `.` (Period) |
 | Special Move | F | `/` (Slash) |
 
 > All controls are **fully customizable**.
@@ -86,7 +86,7 @@ Each fighter shares the same base stickman model but differs in:
 
 ## 🚀 Extra Features
 
-- Leaderboard (wins, kills, damage)  
+#### - Leaderboard (wins, kills, damage) **DOESN'T WORK WITH GUEST**
 - Login system (username + password)  
 - Local, Online & AI modes  
 - Ragdoll physics  
@@ -103,54 +103,6 @@ Each fighter shares the same base stickman model but differs in:
 - HTML5 Canvas  
 - CSS3  
 - OOP architecture  
-
----
-
-## 🗓️ Hackathon Roadmap
-
-### Phase 1 – Skeleton
-- Canvas game loop  
-- Input system  
-- Fighter physics  
-
-### Phase 2 – Violence
-- Hitboxes  
-- HP system  
-- Health bars  
-
-### Phase 3 – Flavour
-- Character subclasses  
-- Special moves  
-- Particle effects  
-
-### Phase 4 – Polish
-- Sound effects  
-- UI text  
-- Final cleanup  
-
----
-
-## 🎵 Assets
-
-### Audio
-- Chiptune BGM  
-- Punch sounds  
-- Jump whoosh  
-
-### Visuals
-- Retro + Y2K UI  
-- Stickman art  
-- Confetti / sauce particles  
-
----
-
-## 🏁 Goal
-
-Build a **fully playable chaotic fighting game in 24 hours** that:
-
-- Runs in browser  
-- Has zero dependencies  
-- Is fun with friends  
 
 ---
 
